@@ -82,6 +82,9 @@ class SelectionWidget<T> extends StatefulWidget {
   /// props for selection focus node
   final FocusNode focusNode;
 
+
+  final String? noDataFoundText;
+
   const SelectionWidget({
     Key? key,
     this.popupTitle,
@@ -119,6 +122,7 @@ class SelectionWidget<T> extends StatefulWidget {
     this.popupCustomMultiSelectionWidget,
     this.selectionListViewProps = const SelectionListViewProps(),
     required this.focusNode,
+    this.noDataFoundText
   }) : super(key: key);
 
   @override
@@ -205,8 +209,8 @@ class SelectionWidgetState<T> extends State<SelectionWidget<T>> {
                                 widget.searchFieldProps?.controller?.text,
                               );
                             else
-                              return const Center(
-                                child: const Text("No data found"),
+                              return  Center(
+                                child:  Text(widget.noDataFoundText??"No data found"),
                               );
                           }
                           return MediaQuery.removePadding(

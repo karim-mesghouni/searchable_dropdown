@@ -60,6 +60,9 @@ class DropdownSearch<T> extends StatefulWidget {
   ///show/hide the search box
   final bool showSearchBox;
 
+  ///the text should appear when there is no data.
+  final String? noDataFoundText;
+
   ///true if the filter on items is applied onlie (via API)
   final bool isFilteredOnline;
 
@@ -297,6 +300,7 @@ class DropdownSearch<T> extends StatefulWidget {
     this.selectionListViewProps = const SelectionListViewProps(),
     this.focusNode,
     this.positionCallback,
+    this.noDataFoundText
   })  : assert(!showSelectedItems || T == String || compareFn != null),
         this.searchFieldProps = searchFieldProps ?? TextFieldProps(),
         this.isMultiSelectionMode = false,
@@ -370,6 +374,7 @@ class DropdownSearch<T> extends StatefulWidget {
     this.selectionListViewProps = const SelectionListViewProps(),
     this.focusNode,
     this.positionCallback,
+    this.noDataFoundText
   })  : assert(!showSelectedItems || T == String || compareFn != null),
         this.searchFieldProps = searchFieldProps ?? TextFieldProps(),
         this.onChangedMultiSelection = onChanged,
@@ -823,6 +828,7 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
       isMultiSelectionMode: isMultiSelectionMode,
       selectionListViewProps: widget.selectionListViewProps,
       focusNode: widget.focusNode ?? FocusNode(),
+      noDataFoundText: widget.noDataFoundText,
     );
   }
 
