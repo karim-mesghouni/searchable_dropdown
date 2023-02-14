@@ -17,6 +17,7 @@ class SelectionWidget<T> extends StatefulWidget {
   final List<T> defaultSelectedItems;
   final PopupPropsMultiSelection<T> popupProps;
   final bool isMultiSelectionMode;
+  final String? noDataFoundText;
 
   const SelectionWidget({
     Key? key,
@@ -29,6 +30,7 @@ class SelectionWidget<T> extends StatefulWidget {
     this.itemAsString,
     this.filterFn,
     this.compareFn,
+    this.noDataFoundText
   }) : super(key: key);
 
   @override
@@ -96,12 +98,12 @@ class SelectionWidgetState<T> extends State<SelectionWidget<T>> {
     return Container(
       constraints: widget.popupProps.constraints,
       child: widget.popupProps.containerBuilder == null
-          ? _defaultWidget()
-          : widget.popupProps.containerBuilder!(context, _defaultWidget()),
+          ? _defaultWidget(widget.noDataFoundText)
+          : widget.popupProps.containerBuilder!(context, _defaultWidget(widget.noDataFoundText)),
     );
   }
 
-  Widget _defaultWidget() {
+  Widget _defaultWidget(String? noDataFoundText) {
     return ValueListenableBuilder(
         valueListenable: _selectedItemsNotifier,
         builder: (ctx, value, wdgt) {
@@ -123,7 +125,7 @@ class SelectionWidgetState<T> extends State<SelectionWidget<T>> {
                         } else if (!snapshot.hasData) {
                           return _loadingWidget();
                         } else if (snapshot.data!.isEmpty) {
-                          return _noDataWidget();
+                          return _noDataWidget(noDataFoundText);
                         }
 
                         return RawScrollbar(
@@ -270,7 +272,7 @@ class SelectionWidgetState<T> extends State<SelectionWidget<T>> {
     );
   }
 
-  Widget _noDataWidget() {
+  Widget _noDataWidget(String? noDataFoundText) {
     if (widget.popupProps.emptyBuilder != null)
       return widget.popupProps.emptyBuilder!(
         context,
@@ -280,7 +282,7 @@ class SelectionWidgetState<T> extends State<SelectionWidget<T>> {
       return Container(
         height: 70,
         alignment: Alignment.center,
-        child: Text("No data found"),
+        child: Text(noDataFoundText??"No data found"),
       );
   }
 

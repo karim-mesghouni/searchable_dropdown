@@ -83,6 +83,9 @@ class DropdownSearch<T> extends StatefulWidget {
   ///offline items list
   final List<T> items;
 
+  /// the text should appear when there is no data.
+  final String? noDataFoundText;
+
   ///selected item
   final T? selectedItem;
 
@@ -181,6 +184,7 @@ class DropdownSearch<T> extends StatefulWidget {
     this.compareFn,
     this.onBeforeChange,
     this.onBeforePopupOpening,
+    this.noDataFoundText,
     PopupProps<T> popupProps = const PopupProps.menu(),
   })  : assert(
           !popupProps.showSelectedItems || T == String || compareFn != null,
@@ -208,6 +212,7 @@ class DropdownSearch<T> extends StatefulWidget {
     this.filterFn,
     this.itemAsString,
     this.compareFn,
+
     this.selectedItems = const [],
     this.popupProps = const PopupPropsMultiSelection.menu(),
     FormFieldSetter<List<T>>? onSaved,
@@ -216,6 +221,7 @@ class DropdownSearch<T> extends StatefulWidget {
     BeforePopupOpeningMultiSelection<T>? onBeforePopupOpening,
     FormFieldValidator<List<T>>? validator,
     DropdownSearchBuilderMultiSelection<T>? dropdownBuilder,
+    this.noDataFoundText,
   })  : assert(
           !popupProps.showSelectedItems || T == String || compareFn != null,
         ),
@@ -671,6 +677,7 @@ class DropdownSearchState<T> extends State<DropdownSearch<T>> {
       compareFn: widget.compareFn,
       isMultiSelectionMode: isMultiSelectionMode,
       defaultSelectedItems: List.from(getSelectedItems),
+      noDataFoundText: widget.noDataFoundText,
     );
   }
 
